@@ -8,7 +8,7 @@ class RandomLHSGeneratorDrift(RandomLHSGenerator):
 
     def __init__(self, speed=1, random_seed_generation=1, dimensions=10, center_num=10,
                  sample_limit=None, class_num=2,
-                 hyper_cube_length=500, variance=1, file_name = None,
+                 hyper_cube_length=500, variance=60, file_name = None,
                  stream_name='LHSData', criterion='maximin', distribution='gauss'):
         super(RandomLHSGeneratorDrift, self).__init__(random_seed_generation, dimensions,
                                                  center_num, sample_limit, class_num,
@@ -17,12 +17,12 @@ class RandomLHSGeneratorDrift(RandomLHSGenerator):
         self.speed = speed
         self.generateCentroids()
         self.rand_model = Random()
-        self.drift_times = [self.rand_model.randint(9000, 10100) for i in xrange(dimensions)]
+        self.drift_times = [self.rand_model.randint(50, 2000) for i in xrange(dimensions)]
 
 
 
     def change_distribution(self, distribution):
-        self.distribution = distribution
+        self.feature_distributions = distribution
 
 
     def shift_centroid(self):
@@ -35,7 +35,7 @@ class RandomLHSGeneratorDrift(RandomLHSGenerator):
 
                     if self.rand_model.randint(0, 1) is 1:
                         #shift distribution
-                        self.distribution[dimension] = self.supported_distributions[self.rand_model.randrange(0, self.number_of_distributions)]
+                        self.feature_distributions[dimension] = self.supported_distributions[self.rand_model.randrange(0, self.number_of_distributions)]
 
 
 

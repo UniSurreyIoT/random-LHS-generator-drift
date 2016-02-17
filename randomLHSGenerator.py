@@ -25,7 +25,7 @@ class RandomLHSGenerator(object):
                               } #'cauchy': self.rand_generate}
         self.supported_distributions = self.distributions.keys()
         self.number_of_distributions = len(self.supported_distributions)
-        self.distribution = [distribution for i in xrange(dimensions)]
+        self.feature_distributions = [distribution for i in xrange(dimensions)]
         self.attributes = ['attribute%i' %i for i in xrange(dimensions)]
         self.attributes.append('class')
         self.centre_num = centre_num
@@ -72,7 +72,7 @@ class RandomLHSGenerator(object):
                 self.samples_produced += 1
             label = chooseRandomIndex(self.weights, self.rand_generate)
             centroid = self.centroids[label]
-            point = {feature: self.draw_from_distribution(self.distribution[dimension], centre, self.variance) / self.hyper_cube_length
+            point = {feature: self.draw_from_distribution(self.feature_distributions[dimension], centre, self.variance) / self.hyper_cube_length
                      for feature, dimension, centre in zip(self.features, range(self.dimensions),centroid.centre)}
 
             # points = zeros((self.centre_num, self.dimensions))
